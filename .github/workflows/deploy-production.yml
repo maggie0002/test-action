@@ -30,8 +30,8 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            expressjs/*
-            scripts/*
-            mac_arm64/*
-            linux/*
-            windows/*
+            expressjs/**
+            scripts/**
+            mac_arm64/**
+            linux/**
+            windows/**
