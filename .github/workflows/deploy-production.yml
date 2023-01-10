@@ -16,6 +16,8 @@ env:
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,8 +30,8 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            .github/**
-            builder/**
-            mac_arm64/**
-            linux/**
-            windows/**
+            .github/*
+            builder/*
+            mac_arm64/*
+            linux/*
+            windows/*
