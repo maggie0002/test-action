@@ -1,0 +1,30 @@
+# Deploy to the fleet and build the Electron apps
+
+name: Deploy to production
+
+on:
+  push:
+
+env:
+  BALENA_CLI_VERSION: 14.5.15
+  BALENA_FLEET: bdi/starter-interface
+  ELECTRON_OUTPUT_PATH: "ui/dist/electron/Packaged"
+  GHCR_IMAGE_NAME: balena-labs-research/bsi
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all workflow artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Create production changeLog and release with the artifacts
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            expressjs/*
+            scripts/*
+            mac_arm64/*
+            linux/*
+            windows/*

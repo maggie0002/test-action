@@ -1,0 +1,25 @@
+name: Balena Starter Interface
+description: >-
+  A UI for interacting with Balena devices and a starter project for creating your own UI.
+joinable: false
+type: sw.application
+assets:
+  repository:
+    type: blob.asset
+    data:
+      url: "https://github.com/balena-labs-research/starter-interface"
+  logo:
+    type: blob.asset
+    data:
+      url: "https://github.com/balena-labs-research/apps-logo/raw/main/logo.png"
+data:
+  defaultDeviceType: raspberrypi4-64
+  supportedDeviceTypes:
+    - raspberry-pi
+    - raspberry-pi2
+    - raspberrypi3
+    - raspberrypi3-64
+    - raspberrypi4-64
+    - intel-nuc
+    - genericx86-64-ext
+version: 0.0.1

@@ -1,0 +1,47 @@
+# Deploy pull requests to the test fleet automatically
+name: "Deploy to development devices"
+on:
+  pull_request:
+    branches:
+      - main
+    types: [assigned]
+
+env:
+  PR_NUMBER: ${{ github.event.number }}
+
+jobs:
+  build:
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        job_name: ["rpi", "nuc", "fin", "generic"]
+
+        include:
+          - job_name: rpi
+            fleet: bdi/bdi-rpi
+
+          - job_name: nuc
+            fleet: bdi/bdi-nuc
+
+          - job_name: fin
+            fleet: bdi/bdi-fin
+
+          - job_name: generic
+            fleet: bdi/bdi-generic
+
+
+    name: ${{ matrix.job_name }}
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Balena CLI Action
+        uses: balena-labs-research/community-cli-action@1.0.0
+        with:
+          balena_token: ${{secrets.BALENA_TOKEN}}
+          balena_cli_commands: >
+            push ${{ matrix.fleet }} --release-tag PR "${{ env.PR_NUMBER }}" commit-sha "${{ github.event.pull_request.head.sha }}";
+          balena_cli_version: 14.5.15
